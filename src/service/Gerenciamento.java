@@ -7,7 +7,7 @@
 //    - **Buscar:** retornar objetos ou listas filtradas (por nome, nível, dificuldade).
 //    - **Listar:** todos os registros, com opção de filtragem (pendentes/concluídos).
 // - **Validações internas:** unicidade de identificadores, consistência de estados e restrições de negócio.
-package repository;
+package service;
 
 public class Gerenciamento {
 
