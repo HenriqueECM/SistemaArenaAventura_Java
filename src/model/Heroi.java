@@ -3,80 +3,102 @@ package model;
 import java.util.ArrayList;
 
 public abstract class Heroi {
-	private String nome;
+    private String nome;
+    private String classe;
     private int nivel;
     private int vidaAtual;
     private int vidaMaxima;
     private int experiencia;
-    private boolean statusVivo;
-    private ArrayList<Item> inventario;
-    
-    public Heroi (String nome, int nivel) {
-    	this.nome = nome;
-    	this.nivel = nivel;
-    	this.vidaMaxima = nivel * 100;
-    	this.vidaAtual = this.vidaMaxima;
-    	this.experiencia = 0;
-    	this.statusVivo = true;
-        this.inventario = new ArrayList<>();
+    private boolean vivo;
+    private ArrayList<Item> inventario = new ArrayList<>();
+
+    public Heroi(String nome, int nivel, String classe) {
+        this.nome = nome;
+        this.nivel = nivel;
+        this.classe = classe;
+        this.vidaMaxima = nivel * 100;
+        this.vidaAtual = vidaMaxima;
+        this.experiencia = 0;
+        this.vivo = true;
     }
-	
-	public String getNome() {
-		return nome;
-	}
 
+    public abstract int atacar();
 
+    public void receberDano(int dano) {
+        vidaAtual -= dano;
+        if (vidaAtual <= 0) {
+            vidaAtual = 0;
+            vivo = false;
+        }
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void ganharExperiencia(int xp) {
+        experiencia += xp;
+        while (experiencia >= nivel * 100) {
+            experiencia -= nivel * 100;
+            nivel++;
+            vidaMaxima = nivel * 100;
+            vidaAtual = vidaMaxima;
+        }
+    }
 
+    public void adicionarItem(Item item) {
+        inventario.add(item);
+    }
 
+    public void listarInventario() {
+        if (inventario.isEmpty()) {
+            System.out.println("- Inventário vazio.");
+        } else {
+            for (Item item : inventario) {
+                System.out.println("- " + item);
+            }
+        }
+    }
 
-	public int getNivel() {
-		return nivel;
-	}
+    @Override
+    public String toString() {
+        return String.format("%s (Classe: %s) | Nível: %d | Vida: %d/%d | XP: %d | Itens: %d",
+                nome, classe, nivel, vidaAtual, vidaMaxima, experiencia, inventario.size());
+    }
 
+    // Getters
+    public String getNome() { 
+    	return nome; 
+    	}
+    
+    public int getNivel() { 
+    	return nivel; 
+    	}
+    
+    public int getVidaAtual() { 
+    	return vidaAtual; 
+    	}
+    
+    public boolean isVivo() { 
+    	return vivo; 
+    	}
+    
+    public String getClasse() { 
+    	return classe; 
+    	}
+    
+    public int getExperiencia() { 
+    	return experiencia; 
+    	}
+    
+    public ArrayList<Item> getInventario() { 
+    	return inventario; 
+    	}
 
+    // Setters limitados
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+        this.vidaMaxima = nivel * 100;
+    }
 
-	public void setNivel(int nivel) {
-		this.nivel = nivel;
-	}
-
-
-
-	public int getVidaAtual() {
-		return vidaAtual;
-	}
-
-
-
-	public void setVidaAtual(int vidaAtual) {
-		this.vidaAtual = vidaAtual;
-	}
-
-
-	// Método de Ataque (abstrato)
-	public abstract void ataque();
-	
-	// Método para aplicar redução de vida e atualizar status de vivo.
-	public int receberDano() {
-		return 0;
-	}
-	
-	// Método para agregar experiência, checar subida de nível automática e restaurar vida.
-	public int ganharExperiencia() {
-		return 0;
-	}
-
-	// Método para adicionar item ao inventário e registrar descrição.
-	
-	
-	// Método para iterar sobre a lista de itens e exibir cada um.
-	
-	@Override
-	public String toString() {
-		return "heroi [nome=" + nome + ", nivel=" + nivel + ", vidaAtual=" + vidaAtual + ", vidaMaxima=" + vidaMaxima
-				+ ", experiencia=" + experiencia + ", statusVivo=" + statusVivo + ", inventario=" + inventario + "]";
-	}
+    public void setVidaAtual(int vida) {
+        this.vidaAtual = Math.min(vida, vidaMaxima);
+        this.vivo = vidaAtual > 0;
+    }
 }

@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
-public class MenuController {  // nomes de classe começam com maiúscula (convenção Java)
+public class MenuController {
 
     private static Scanner sc = new Scanner(System.in);
 
