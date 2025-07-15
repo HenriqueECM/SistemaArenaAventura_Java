@@ -15,12 +15,12 @@ public class Gerenciamento {
 	public static void criarHeroi (Heroi heroi) {
         for (Heroi h : listaHerois) {
             if (h.getNome().equalsIgnoreCase(heroi.getNome())) {
-                System.out.println("Já existe um herói com esse nome.");
+                System.out.println("\nJá existe um herói com esse nome.");
                 return;
             }
         }
         listaHerois.add(heroi);
-        System.out.println("Herói '" + heroi.getNome() + "' criado com sucesso!");
+        System.out.println("\nHerói '" + heroi.getNome() + "' criado com sucesso!");
     }
 	
 	public static void removerHeroi(String nome) {

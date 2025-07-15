@@ -70,7 +70,7 @@ public class MenuController {
                     System.out.print("Nível inicial: ");
                     int nivel = sc.nextInt();
 
-                    System.out.print("Atributo específico (força/inteligência/destreza): ");
+                    System.out.print("Atributo específico (1-força, 2-inteligência, 3-destreza): ");
                     int atributo = sc.nextInt();
 
                     Heroi novo = switch (classe) {
